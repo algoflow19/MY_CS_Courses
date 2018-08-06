@@ -244,17 +244,44 @@ class CiphertextMessage(Message):
 if __name__ == '__main__':
 
     #Example test case (PlaintextMessage)
+    
     plaintext = PlaintextMessage('hello', 2)
     print('Expected Output: jgnnq')
-    print('Actual Output:', plaintext.get_message_text_encrypted())
-
+    print('Actual Output:   ', plaintext.get_message_text_encrypted())
+    
+    
     #Example test case (CiphertextMessage)
     ciphertext = CiphertextMessage('jgnnq')
     print('Expected Output:', (24, 'hello'))
-    print('Actual Output:', ciphertext.decrypt_message())
+    print('Actual Output:  ', ciphertext.decrypt_message())
 
-    #TODO: WRITE YOUR TEST CASES HERE
+    plaintext = PlaintextMessage('abcdef',3)
+    print('Expected OutPut: defght')
+    print('Actual Output:   ',plaintext.get_message_text_encrypted())
+    
+    plaintext = PlaintextMessage('zabcd',1)
+    print('Expected OutPut: abcde')
+    print('Actual Output:   ',plaintext.get_message_text_encrypted())
+    
+    ciphertext = CiphertextMessage('hsffe')
+    print('Expected Output:', (25, 'greed'))
+    print('Actual Output:  ', ciphertext.decrypt_message())    
+    
+    ciphertext = CiphertextMessage('fqddc')
+    print('Expected Output:', (1, 'greed'))
+    print('Actual Output:  ', ciphertext.decrypt_message())    
+    
+    ciphertext = CiphertextMessage(get_story_string())
+    print('Actual Output:  ', ciphertext.decrypt_message())    
+    """
+    decrypt shift: 12
+    story: Jack Florey is a mythical character created on the spur of a moment to help cover an insufficiently planned hack. 
+    He has been registered for classes at MIT twice before, 
+    but has reportedly never passed aclass. 
+    It has been the tradition of the residents of East Campus to become Jack Florey for a few nights each year to educate incoming students in the ways, 
+    means, and ethics of hacking.
 
-    #TODO: best shift value and unencrypted story 
+    """
+    
     
     pass #delete this line and replace with your code here

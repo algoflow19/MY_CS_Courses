@@ -70,7 +70,8 @@ class SubMessage(object):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        self.message_text=text
+        self.valid_words=load_words(WORDLIST_FILENAME)
     
     def get_message_text(self):
         '''
@@ -78,7 +79,7 @@ class SubMessage(object):
         
         Returns: self.message_text
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text
 
     def get_valid_words(self):
         '''
@@ -87,7 +88,7 @@ class SubMessage(object):
         
         Returns: a COPY of self.valid_words
         '''
-        pass #delete this line and replace with your code here
+        return self.valid_words
                 
     def build_transpose_dict(self, vowels_permutation):
         '''
@@ -108,8 +109,15 @@ class SubMessage(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
+        transpose_dict={}
+        vowels_permutation=vowels_permutation.lower()
+        for i in range(len(vowels_permutation)):
+            transpose_dict[VOWELS_LOWER[i]]=vowels_permutation[i]
+            transpose_dict[VOWELS_UPPER[i]]=vowels_permutation[i].upper()
+        for letter in (CONSONANTS_LOWER+CONSONANTS_UPPER):
+            transpose_dict[letter]=letter
+        return transpose_dict
         
-        pass #delete this line and replace with your code here
     
     def apply_transpose(self, transpose_dict):
         '''
@@ -118,8 +126,14 @@ class SubMessage(object):
         Returns: an encrypted version of the message text, based 
         on the dictionary
         '''
+        encrypter_message_list=[]
+        for letter in self.message_text:
+            if(letter in transpose_dict):
+                encrypter_message_list.append(transpose_dict[letter])
+            else:
+                encrypter_message_list.append(letter)
         
-        pass #delete this line and replace with your code here
+        return "".join(encrypter_message_list)
         
 class EncryptedSubMessage(SubMessage):
     def __init__(self, text):
@@ -132,7 +146,7 @@ class EncryptedSubMessage(SubMessage):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        SubMessage.__init__(self,text)
 
     def decrypt_message(self):
         '''
@@ -152,8 +166,26 @@ class EncryptedSubMessage(SubMessage):
         
         Hint: use your function from Part 4A
         '''
-        pass #delete this line and replace with your code here
-    
+        permutations_list=get_permutations(VOWELS_LOWER)
+        plain_message=""
+        vailds_words_num=0
+        for key_str in permutations_list:
+            key_dict=self.build_transpose_dict(key_str)
+            current_plain_message=self.apply_transpose(key_dict)
+            current_word_list=current_plain_message.split(" ")
+            current_vailds_words_num=0
+            for word in current_word_list:
+                if(is_word(self.get_valid_words(),word)):
+                    current_vailds_words_num+=1
+            if(current_vailds_words_num>vailds_words_num):
+                vailds_words_num=current_vailds_words_num
+                plain_message=current_plain_message
+        
+        if(vailds_words_num==0):
+            return self.get_message_text()
+        return plain_message
+                   
+
 
 if __name__ == '__main__':
 
@@ -167,4 +199,7 @@ if __name__ == '__main__':
     enc_message = EncryptedSubMessage(message.apply_transpose(enc_dict))
     print("Decrypted message:", enc_message.decrypt_message())
      
-    #TODO: WRITE YOUR TEST CASES HERE
+    encryptoin="Gaad grOOd"
+    enc_message=EncryptedSubMessage(encryptoin)
+    print("Input encryptoin:",encryptoin)
+    print("Decrypted message:", enc_message.decrypt_message())
