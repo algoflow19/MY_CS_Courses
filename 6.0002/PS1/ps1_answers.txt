@@ -1,0 +1,2 @@
+Problem A.5:
+Greed Algorithm run faster. To explain why greed algothrim is faster, we can compare the 
