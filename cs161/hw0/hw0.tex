@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage{fullpage,graphicx}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,multirow,xcolor}
+\usepackage{algorithmic}
+\usepackage[ruled,vlined,commentsnumbered,titlenotnumbered]{algorithm2e}
+\usepackage{minted}
+
+\begin{document}
+\noindent
+CS 161 \hfill \textbf{Homework 0} \newline 
+Summer 2018 \hfill \textbf{Due: \textcolor{red}{This is worth 0\% of your grade}}
+
+\noindent
+\rule{\linewidth}{0.4pt}
+
+\section*{Exercises}
+
+Exercises should be completed \textbf{on your own}.
+
+\noindent\rule{\linewidth}{1.0pt}
+
+\begin{enumerate}
+  \setcounter{enumi}{-1}
+  \item Install Python 3. Then go to \texttt{jupyter.org} and follow the
+    instructions to install Jupyter notebook. If you are having difficulty,
+    please talk to a TA during office hours or ask on Piazza.
+  \item See the Jupyter notebook \texttt{hw0.ipynb} for Exercise 1. This file
+    includes the function \texttt{estimateMean}, which we have reproduced here.
+
+\begin{minted}[mathescape,
+               linenos]{python}
+def estimateMean(A):
+    samples = []
+    # Draws a random sample of 10 elements with replacement from A
+    for i in range(10):
+        samples.append(A[random.choice(range(len(A)))])
+    # Returns the sample mean
+    return sum(samples) / len(samples)
+\end{minted}
+
+    \begin{enumerate}
+      \item \texttt{estimateMean(A)} attempts to estimate the mean of an array of numbers $A$. Show
+        that the expected value that \texttt{estimateMean(A)} returns is indeed
+        the mean of $A$.
+
+        \textbf{[We are expecting: A formal proof.]}
+      \item In the notebook, there is some code for trying out 
+        \texttt{estimateMean(A)} a bunch of times for lists with elements
+        between 0 and 30, and which plots the error. Based on playing around
+        with this code, is it likely that the estimate returned by 
+        \texttt{estimateMean(A)} is off by more than 20? How likely or unlikely
+        is this? Does your answer depend on $n$?
+
+        \textbf{[We are expecting: Your answers to the questions along with a
+        convincing argument (a plot is fine; a formal proof is not required).]}
+    \end{enumerate}
+
+\end{enumerate}
+
+\newpage
+
+\section*{Problems}
+
+You can collaborate with your classmates about the problems. However:
+
+\begin{itemize}
+  \item Try the problems on your own \textit{before} collaborating.
+  \item Write up your solutions yourself, in your own words.  You should never
+    share your typed-up solutions with your collaborators.
+  \item If you collaborated, list the names of the students you collaborated
+    with at the beginning of each problem.
+\end{itemize}
+
+\noindent\rule{\linewidth}{1.0pt}
+
+\begin{enumerate}
+  \item \textbf{(Minimum finding)} Given a zero-indexed array $A_1$ of $n$
+    integers, we say a second array $A_2$ is a \textit{rotation} of the first
+    if there exists a \textit{pivot} $p \in \{0, \ldots, n-1\}$ such that $A_2$
+    can be rewritten as the concatenation of two subarrays of $A_1$ as follows: 
+    $[A_1[p], \ldots, A_1[n-1]] + [A_1[0], \ldots, A_1[p-1]]$, where $+$ is the
+    concatenation operator. For example, if $A_1 = [1, 2, 3, 4]$, then there are
+    four valid rotations: $[1, 2, 3, 4]$; $[2, 3, 4, 1]$; $[3, 4, 1, 2]$; and
+    $[4, 1, 2, 3]$.
+    
+    \begin{enumerate}
+      \item Design a simple $O(n)$-time algorithm to find the minimum element
+        of an array $A$, where A is a rotation of a sorted array (in ascending
+        order). You can assume $A$ does not contain any duplicate elements. For
+        example, if $A = [11, 13, 17, 23, 2, 3, 5, 7]$, then your algorithm
+        should return 2.
+
+        \textbf{[We are expecting: Pseudocode and a brief English description.]}
+      \item Design an $O(\log(n))$-time divide-and-conquer algorithm to find the minimum element
+        of an array $A$, where A is a rotation of a sorted array (in ascending
+        order). Again, you can assume $A$ does not contain
+        any duplicate elements.
+
+        \textbf{[We are expecting: Pseudocode and brief English description, as
+        well as an informal justification of the running time. You do not need
+        to prove that your algorithm is correct.]}
+      \item In the previous two parts, you could assume $A$ did not contain any
+        duplicate elements. What is an example of an array $A$ containing
+        duplicate elements that is still a rotation of a sorted array, but
+        causes your algorithm from part (b) to return a non-minimum element?
+
+        \textbf{[We are expecting: An example array.]}
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}

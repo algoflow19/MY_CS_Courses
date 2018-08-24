@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k}{def} \PYG{n+nf}{estimateMean}\PYG{p}{(}\PYG{n}{A}\PYG{p}{):}
+    \PYG{n}{samples} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{c+c1}{\PYGZsh{} Draws a random sample of 10 elements with replacement from A}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{):}
+        \PYG{n}{samples}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{A}\PYG{p}{[}\PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{A}\PYG{p}{)))])}
+    \PYG{c+c1}{\PYGZsh{} Returns the sample mean}
+    \PYG{k}{return} \PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{samples}\PYG{p}{)} \PYG{o}{/} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{samples}\PYG{p}{)}
+\end{Verbatim}
