@@ -1,0 +1,124 @@
+%CS 109 Problem Set Template
+%B. E. Burr
+
+\documentclass{article}
+	% basic article document class
+	% use percent signs to make comments to yourself -- they will not show up.
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+	% packages that allow mathematical formatting
+
+\usepackage{graphicx}
+	% package that allows you to include graphics
+
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+\frenchspacing
+	% one space after periods
+
+\usepackage{fancyhdr}
+	% allows custom headers
+
+\pagestyle{fancy}
+
+\lhead{CS 109, Stanford University \\ Problem Set 1} 
+\rhead{FIRSTNAME LASTNAME (SUNET@stanford.edu) \\ 012345678}
+
+\cfoot{\thepage}
+\renewcommand{\footrulewidth}{0.4pt} 
+	%footer
+
+\begin{document}
+\thispagestyle{fancy} %shows header/footer
+
+\begin{enumerate}
+
+
+	\item 
+	
+	\begin{enumerate}
+		
+		\item There is something..
+		
+	\end{enumerate}
+
+	\item 
+	
+	\begin{enumerate}
+		\item This is a problem that permutations of indistinct objects. So it's easy to know that the answer is $\frac{12!}{3!\times5!\times4!}$
+		\item We know that there are five possible position that a non-linux computer in the first five computers, and then there is a permutations of indistinct objects(Macs and PCs). Now there is two experiments, so we can conclude the answer is $5\times\frac{8!}{5!\times3!}$
+		\item Just like the last question, we do two expriments. First, we place the three PCs which has $3+3=6$ methods. Second ,we has a permutations of indistinct objects(Linux and Macs), so we can conclude the answer is $6\times\frac{9!}{5!\times4!}$ 
+		
+		\item A fraction with a binomial: $\frac{{x \choose y}}{z^2}$
+	
+	\end{enumerate}
+	
+	\item
+	
+	\begin{enumerate}
+		\item We first calculate the number of possible exhibits without considering the two particular bird species cannot be placed together, then sub the number of exhibits including the two particular bird species. The first part of the answer is ${7 \choose 3}\times{5 \choose 3}$, and the second part is $5\times{5 \choose 3}$. So the answer is ${7 \choose 3}\times{5 \choose 3}-5\times{5 \choose 3}=30\times{5 \choose 3}$.
+		\item Just like the last question, we get the answer is ${7 \choose 3}\times7$
+		\item For this question, we can still use the little trick above. We get the answer is ${7 \choose 3}\times{5 \choose 3}-{4 \choose 2}\times{6 \choose 2}$
+	\end{enumerate}
+	
+	\item %	 A product in math mode: \[\prod\limits_{i=1}^n x = x^n\]
+	\begin{enumerate}
+	\item In this case, there is a permutations of distinct objects, so the answer is $26!$
+	\item We can treat Q and U as a single element, so we know that it has two possible form: QU and UQ, and there is a permutations of distinct objects(this element and the other 24 letters.). Therefore, the answer is $2\times25!$
+	\item We use the same trick in last question, there is $5!$ possible forms for vowels, we treat it like a single element. It's easy to get the answer is $5!\times22!$.
+	\item For this question, we first found the possible position for the vowels, and we know for the 21 consonants, there is 22 spaces that can place vowels, so we have ${22 choose 5}$ possible position. Second, we know that there are two permutations of distinct objects for vowels and consonants. Therefore, we know the answer is ${22 \choose 5}\times5!\times21!$.
+	\end{enumerate}
+	
+	\item 
+	\begin{enumerate}
+	\item It's not diffcult to figure out that the distinct paths is just a permutation of m right-steps and n down-steps. We can get the answer is $\frac{(m+n)!}{m!\times n!}$.
+	\item In the case, we have $m-1$ right-steps and n down-steps to form a permutation, and it's easy to know that the answer is $\frac{(m+n-1)!}{(m-1)!\times n!}$
+	\item We know that mo matter the robot moves right or moves down first, both the paths have two stage for moving down and moving right separately. We know that the first stage of moving down can be 1,2..n-1, and then the second stage is deteminded, and we could also analysis the moving right stages in the same way. Finally, we get the answer is $2\times(m-1)\times(n-1)$.
+	\end{enumerate}
+	
+	\item
+	\begin{enumerate}
+	\item We first do the minimal investment for company 1, 2, 3, and 4, so we left 10 million. We now can use the Divider Method. we have 10 elements each stands for 1 million and 3 dividers to represpent the invement amount for companies. We can easily get the answer is $\frac{13!}{3!\times10!}$.
+	\item In this case, investments could be made in 3 or 4 companies. First, we consider that only invest the first three companies. Just like (a), we use the Divider Method, and we get $\frac{16!}{2!\times14!}$. Then, we consider that invest 1,2,4  1,3,4 and 2,3,4. we can use the same method to get the number of different investment strategies. Finally, plusing the answer of last question, we get $\frac{16!}{2!\times14!}+\frac{15!}{2!\times13!}+\frac{14!}{2!\times12!}+\frac{13!}{2!\times11!}+2\times(m-1)\times(n-1)$
+	\end{enumerate}
+	\item Let a vector whick has n zero elements. We now can use the Divider Method, thinking that the $x_i$ is bucket and there is k elements 1 for bucketing, so we get the answer is $\frac{(n+k-1)!}{(n-1)!\times k!}$.
+\newpage
+	\item
+	\begin{enumerate}
+	\item We first choose a suit which we have four choices, then we still have two step to get the answer. We pick out five cards and next make a permutation of it, so we finally get the answer is $\frac{4\times{13 \choose 5}}{{52 \choose 5}}$
+	\item We divide the expriment into two steps. First, we pick out four numbers that represpent the avaliable numbers in the hand. Second, we choose which number to be the pair and choose the suit for each cards. Finally we get the answer is $\frac{{13 \choose 4}\times 4 \times {4 \choose 2} \times 4^3 }{{52 \choose 5}}$.
+	\item Like the last question, we first choose the number sequences, then choose which two numbers to be the pairs, and finally the suit for each cards. We get the answer is $\frac{{13 \choose 3}\times 3 \times {4 \choose 2} \times 4 }{{52 \choose 4}}$.
+	\item Like the above questions. We get ${13 \choose 3}\times 3 \times 4^3$.
+	\item ${13 \choose 2}\times 2\times 4$.
+	\end{enumerate}
+	\item
+	\begin{enumerate}
+	\item To produce the completely degenerate BST, each node only has one sub-tree, so all nodes bolwe it must bigger or smaller then it. So given a sorted secquence of integers 1 through n, we just catch a node form its head or tail and then insert it to current BST to construct a completely BST. In this case, we just need conut how many head-or-tail choices permutations are there. It's easy to get the answer is $\frac{2^{(n-1)}}{n!}$(For a single node, head and tail is the same).
+	\item Using python, Get the answer is 10.
+	
+	\end{enumerate}
+	
+	\item High-school level, easy to do.
+	\begin{enumerate}
+	\item 1/2
+	\item 0.29
+	\item 0.75
+	\end{enumerate}
+	\item 
+	\begin{enumerate}
+	\item In this case, she first fail k-1 times, and then she success. It's easy to know that the possiblity of the first try fail is $\frac{n-1}{n}$, and the possiblity of next failure is $\frac{n-2}{n-1}$ and so on unitl the k-th try. It's a little surprise to me that the answer is $\frac{1}{n}$.
+	\item We use the same ider of last question. It's easy to get the answer is $(\frac{n-1}{n})^{k-1}\times \frac{1}{n}$.
+	\end{enumerate}
+	\item 
+	 Assume that the first r bits of the received message contain exactly k 1’s, so the first r bits has ${r \choose k}$ forms. Second, the left $(M+N)-r$ bits have ${M+N-r \choose N-k}$. Since every binary string is equally likely to appear. We get the answer is $\frac{{r \choose k}\times{M+N-r \choose N-k}}{{M+N \choose M}}$.
+	\item 
+	Treat the 10 distinct users as ten bin(Ohhhh...), and there are 26 distinguishable items to put. We first pick out the users, and there are ${10 \choose 3}{7 \choose 4}$ status. Second, we give the 26 emails to the picked users thus meet the problem that 'Selecting multiple groups of objects', and get the there are ${26 \choose 6,6,6,2,2,2,2}$ status. Finally we get the answer is $\frac{{10 \choose 3}{7 \choose 4}{26 \choose 6,6,6,2,2,2,2}}{10^{26}}$.
+	\item From the problem, we know that the strings are distinct. We first consider whick k string are hashed to the first bucket, and it's easy to get the answer is ${m \choose k}$. Second, we throw left strings into $N-1$ buckets, and we get $(N-1)^{m-k}$ status. Finally, we combine the two parts to get the answer is $\frac{{m \choose k} \times (N-1)^{m-k}}{N^m}$.
+	\item We treat the two random integers as a two integers secquence, and we know that every sequence is equally likely to be generated. Picking any secquence that the second randomly generated integer has a value that is (strictly) greater than the first, if we swap the two integers, we get a '(strictly) litter than' secquence and so as for any '(strictly) litter than' secquence, thus we know that it's equal likely that you get the two type secquences. Therefore, we can calucate the possiblity of 'equalient interger secquence' and then easily get the answer. We know there is 12 secquences that is 'equalient interger secquence'(11,22,33,...), so we know its possiblity is $\frac{12}{12\times12}=\frac{1}{12}$, and we get the answer is $\frac{11}{24}$.
+\end{enumerate}
+
+
+
+
+\end{document}
