@@ -7,7 +7,7 @@ LDFLAGS=
 
 OBJS=$(SRCS:.c=.o)
 
-all: $(EXECUTABLES)
+all: $(EXECUTABLES) 
 
 $(EXECUTABLES): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@

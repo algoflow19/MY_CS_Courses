@@ -9,9 +9,12 @@
 #include <sys/wait.h>
 #include <termios.h>
 #include <unistd.h>
-
+#include<dirent.h>
 #include "tokenizer.h"
+#include<wait.h>
 
+
+const static int MAXNAMELENGTH=1024;
 /* Convenience macro to silence compiler warnings about unused function parameters. */
 #define unused __attribute__((unused))
 
@@ -29,6 +32,8 @@ pid_t shell_pgid;
 
 int cmd_exit(struct tokens *tokens);
 int cmd_help(struct tokens *tokens);
+int cmd_pwd(struct tokens *tokens);
+int cmd_cd(struct tokens *tokens);
 
 /* Built-in command functions take token array (see parse.h) and return int */
 typedef int cmd_fun_t(struct tokens *tokens);
@@ -43,6 +48,8 @@ typedef struct fun_desc {
 fun_desc_t cmd_table[] = {
   {cmd_help, "?", "show this help menu"},
   {cmd_exit, "exit", "exit the command shell"},
+  {cmd_pwd,"pwd","print out the current working directory"},
+  {cmd_cd,"cd","change the current working directory"}
 };
 
 /* Prints a helpful description for the given command */
@@ -57,6 +64,26 @@ int cmd_exit(unused struct tokens *tokens) {
   exit(0);
 }
 
+int cmd_pwd(unused struct tokens *tokens){
+  int length=1024;
+  char path[length];
+  char* result=getcwd(path,length);
+  if(result==NULL){
+      printf ("Too long path! pwd failed...\n");
+      return -1;
+    }
+  printf(path);
+  printf("\n");
+  return 0;
+}
+
+int cmd_cd(struct tokens *tokens){
+  if(chdir(tokens_get_token(tokens, 1))!=0){
+      printf ("Change directory failed!\n");
+      return -1;
+    }
+  return 0;
+}
 /* Looks up the built-in command, if it exists. */
 int lookup(char cmd[]) {
   for (unsigned int i = 0; i < sizeof(cmd_table) / sizeof(fun_desc_t); i++)
@@ -91,6 +118,41 @@ void init_shell() {
   }
 }
 
+bool isNameInDir(char *name,DIR * dir){
+  struct dirent *de;
+  while (true) {
+      de=readdir(dir);
+      if(de==NULL) break;
+      if(strcmp(de->d_name,name)==0)
+        return true;
+    }
+  return false;
+}
+
+void removecommold(char *pathvarcopy){
+  int i=0;
+  while(pathvarcopy[i]!='\0'){
+      if(pathvarcopy[i]==':')
+        pathvarcopy[i]='\0';
+      i++;
+    }
+}
+
+struct pathvarContent
+{
+  char *pathvarcopy;
+  int beginPos;
+};
+
+bool getNextDirName(struct pathvarContent* content,char *buffer){
+  if(content->pathvarcopy[content->beginPos]=='\0')
+    return false;
+  int length=strlen(content->pathvarcopy+content->beginPos);
+  strcpy(buffer,content->pathvarcopy+content->beginPos);
+  content->beginPos+=length+1;
+  return true;
+}
+
 int main(unused int argc, unused char *argv[]) {
   init_shell();
 
@@ -106,13 +168,51 @@ int main(unused int argc, unused char *argv[]) {
     struct tokens *tokens = tokenize(line);
 
     /* Find which built-in function to run. */
-    int fundex = lookup(tokens_get_token(tokens, 0));
+    char *command=tokens_get_token(tokens, 0);
+    int fundex = lookup(command);
 
     if (fundex >= 0) {
       cmd_table[fundex].fun(tokens);
     } else {
-      /* REPLACE this to run commands as programs. */
-      fprintf(stdout, "This shell doesn't know how to run programs.\n");
+      pid_t pid=fork();
+      if(pid==0){
+          int argsNumber=tokens_get_length(tokens);
+          char **arg=(char **)malloc((argsNumber+1)*sizeof(char*));
+          for(int i=0;i<argsNumber;i++){
+              arg[i]=tokens_get_token (tokens,i);
+            }
+          arg[argsNumber]=(char*)NULL;
+          int errCode=execv(command,arg);
+          //printf (strerror(errno),"\n");
+
+
+          char currentDirName[MAXNAMELENGTH];
+          memset(currentDirName,0,MAXNAMELENGTH);
+          struct pathvarContent contentDir;
+          contentDir.beginPos=0;
+          contentDir.pathvarcopy=strdup(getenv("PATH"));
+          removecommold (contentDir.pathvarcopy);
+          while (getNextDirName (&contentDir,currentDirName)) {
+              //fprintf (stdout,"%s\n",currentDirName);
+              fflush(stdout);
+              DIR *dir=opendir (currentDirName);
+              if(isNameInDir (command,dir)){
+                  int dirNameLength=strlen(currentDirName);
+                  currentDirName[dirNameLength]='/';
+                  strcpy(currentDirName+dirNameLength+1,command);
+                  arg[0]=currentDirName;
+                  errCode=execv(currentDirName,arg);
+                  printf (strerror(errno),"\n");
+                  exit(errCode);
+                }
+            }
+          free(contentDir.pathvarcopy);
+          exit(errCode);
+        }
+      int retCode;
+      int retPid=waitpid (-1,&retCode,0);
+      if(!WIFEXITED(retCode))
+        fprintf(stdout, "This shell doesn't know how to run programs.\n");
     }
 
     if (shell_is_interactive)
