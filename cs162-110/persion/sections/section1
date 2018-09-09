@@ -1,0 +1,51 @@
+One.
+1.1
+90210
+0
+----or----
+0
+90210
+
+3.1
+8
+
+3.2
+7
+7
+
+3.3
+7
+7
+-----
+7
+6
+
+3.4
+123456789
+123456700
+----------
+123456700
+123456789
+
+3.5
+Hello World
+:90210
+Hello World
+0
+-----------
+int main(void)
+{
+  pid_t pid = fork();
+  int exit;
+  if (pid != 0) {
+      waitpit(pid,&exit,0);
+    }
+  printf("Hello World\n: %d\n", pid);
+}
+
+3.6
+'
+hello world
+
+'
+
